@@ -1,0 +1,7 @@
+1.	ls 		- Lists all directories in the current directory.
+	cat		- Concatenate files and print the contents.
+	rm		- Remove a file.
+	cp		- Copy source to destination or multiple sources to directory.
+	mv		- Rename sourse to destination or move multiple sources to directory.
+	mkdir	- Create the directory(ies) if they do not already exist
+	cc		- Compile a .c file
