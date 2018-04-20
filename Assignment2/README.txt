@@ -8,7 +8,7 @@ We use gcc, so in the terminal, type:
 This will compile Assignment2.c into a file called a.out.
 
 To run the file, in the terminal, type:
-	./.a.out
+	./a.out
 
 If you are not able to run a.out, you may need to change the file mode of a.out.
 To do this, in the terminal, type:
