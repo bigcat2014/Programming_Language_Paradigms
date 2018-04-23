@@ -24,18 +24,21 @@
 #define BOOL int
 
 typedef enum {
-	fNUM_LINES = 1 << 0,
-	fNUM_BYTES = 1 << 1
+	fERROR			= 0,
+	fNUM_LINES		= 1 << 0,
+	fNUM_BYTES		= 1 << 1,
+	fSET_NUM_LINES	= 1 << 2,
+	fSET_NUM_BYTES	= 1 << 3
 } Options;
 
 void setBits(int *dest, Options mask);
 void clearBits(int *dest, Options mask);
 
-BOOL getNumber(char argv[], int *options, int *nLines, int *nBytes);
-BOOL compareOption(char argv[], char option[], int *options);
+BOOL getOptionValue(char argv[], int *options, int *nLines, int *nBytes);
+BOOL getOption(char argv[], int *options);
 void addStringToArray(char **array, int pos, char src[]);
 
-void printFiles(char **fileNames, size_t numFiles, size_t numLines, size_t numBytes);
+void printFiles(char **fileNames, size_t numFiles, int options, size_t numLines, size_t numBytes);
 void printLines(FILE *fPtr, size_t numLines);
 void printBytes(FILE *fPtr, size_t numBytes);
 
