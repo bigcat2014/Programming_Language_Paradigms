@@ -42,7 +42,7 @@ void clearBits(int *dest, Options mask){ *dest = *dest & ~mask; }
 BOOL getNumber(char argv[], int *options, int *nLines, int *nBytes){
 	Options op;
 	int errVal;
-	
+
 		switch (*options){
 			case fNUM_LINES:
 				errVal = sscanf(argv, "%d", nLines);
@@ -66,10 +66,6 @@ BOOL compareOption(char argv[], char option[], int *options){
 	else { return FALSE; }
 
 	if (!strcmp(argv, option)) {
-		setBits(options, op);
-		return TRUE;
-	}
-	return FALSE;if (!strcmp(argv, option)) {
 		setBits(options, op);
 		return TRUE;
 	}
