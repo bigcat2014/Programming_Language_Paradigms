@@ -79,7 +79,9 @@ void printFiles(char **fileNames, size_t numFiles, int options, size_t numLines,
 	for (int i = 0; i < numFiles; i++){
 		if ((fPtr = fopen(fileNames[i], "r")) == NULL) { printf("Error opening file %s\n", fileNames[i]); continue; }
 
-		printf("===>\t%s\t<===:\n",fileNames[i]);
+		if (numFiles > 1){
+			printf("===>\t%s\t<===:\n",fileNames[i]);
+		}
 		
 		if (maskBits(options, fNUM_LINES)){ printLines(fPtr, numLines); }
 		else if (maskBits(options, fNUM_BYTES)){ printBytes(fPtr, numBytes); }
