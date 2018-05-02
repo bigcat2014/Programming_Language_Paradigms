@@ -16,13 +16,14 @@
 #define FALSE 0
 
 #define N 10
-#define buffSize 1024
+#define BUFFER_SIZE 1024
 
 #define NUM_LINES "-n"
 #define NUM_BYTES "-c"
 
 #define BOOL int
 
+// Options flags
 typedef enum {
 	fERROR			= 0,
 	fNUM_LINES		= 1 << 0,
@@ -31,6 +32,8 @@ typedef enum {
 	fSET_NUM_BYTES	= 1 << 3
 } Options;
 
+
+// Function Declarations
 void setBits(int *dest, Options mask);
 void clearBits(int *dest, Options mask);
 
