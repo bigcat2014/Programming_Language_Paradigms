@@ -20,7 +20,6 @@ int main(int argc, char *argv[]){
 	int currentFile = 0;
 
 	char *input;
-	size_t inputLength;
 
 	// Preliminary loop through args to get options and determine debug mode
 	for (int i = 1; i < argc; i++){
@@ -55,10 +54,10 @@ int main(int argc, char *argv[]){
 	if (DEBUG) { printFileNames(files, numFiles); }
 
 	// Read the standard input into the buffer
-	if ((inputLength = readInput(&input)) == -1) { return EXIT_FAILURE; }
+	if (readInput(&input) == -1) { return EXIT_FAILURE; }
 
 	// Print stdin
-	printInput(input, inputLength, files, numFiles, append);
+	printInput(input, files, numFiles, append);
 
 	if (input != NULL) { free(input); }
 	free2D(files, numFiles);
@@ -160,7 +159,7 @@ void printOptions(int options){
 	if (maskBits(options, fAPPEND)) { printf(", Append\n\n"); }
 	else { printf("\n\n"); }
 }
-void printInput(char *input, size_t inputLength, char **files, size_t numFiles, BOOL append){
+void printInput(char *input, char **files, size_t numFiles, BOOL append){
 	FILE *fPtr = NULL;
 	// Append or overwrite file
 	const char *fileMode = append ? "a":"w";
