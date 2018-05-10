@@ -16,10 +16,12 @@ typedef enum {
 
 void setBits(int *dest, Options mask);
 void clearBits(int *dest, Options mask);
-BOOL maskBits(int options, Options mask);
+int maskBits(int options, Options mask);
 
 BOOL getOption(char arg[], int *options);
 BOOL addStringToArray(char **array, int *pos, char src[]);
+
+BOOL readInput(char **buffer);
 
 void printFileNames(char **files, size_t numFiles);
 void printOptions(int options);
