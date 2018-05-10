@@ -112,6 +112,7 @@ int readInput(char **buffer){
 
 		// Add the character to the buffer
 		(*buffer)[length++] = character;
+		// Print to stdout
 		printf("%c", character);
 
 		// If the next index is outside of the allocated memory, reallocate more memory
@@ -164,11 +165,6 @@ void printInput(char *input, char **files, size_t numFiles, BOOL append){
 	FILE *fPtr = NULL;
 	// Append or overwrite file
 	const char *fileMode = append ? "a":"w";
-
-	// Print debug information
-	//if (DEBUG){ printf("Printing to stdout...\n"); }
-	// Print to stdout
-	//if (fputs(input, stdout) == EOF) { printf("Error writing to stdout\n"); }
 
 	// Print to each file specified
 	for (int i = 0; i < numFiles; i++){
