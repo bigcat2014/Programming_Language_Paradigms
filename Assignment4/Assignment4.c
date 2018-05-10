@@ -108,10 +108,11 @@ int readInput(char **buffer){
 		// Get the next character from stdin
 		character = fgetc(stdin);
 		// If it is the end of the file or fgetc returns NULL, break
-		if (feof(stdin) || character == NULL) { break; }
+		if (feof(stdin) || &character == NULL) { break; }
 
 		// Add the character to the buffer
 		(*buffer)[length++] = character;
+		printf("%c", character);
 
 		// If the next index is outside of the allocated memory, reallocate more memory
 		if (length >= buffSize) {
@@ -139,7 +140,7 @@ int readInput(char **buffer){
 	}
 
 	// Reallocate the buffer to the exact size of the buffer
-	if (length != 0) { realloc(*buffer, sizeof(char) * length); }
+	if (length != 0) { *buffer = realloc(*buffer, sizeof(char) * length); }
 	return length;
 }
 
@@ -165,9 +166,9 @@ void printInput(char *input, char **files, size_t numFiles, BOOL append){
 	const char *fileMode = append ? "a":"w";
 
 	// Print debug information
-	if (DEBUG){ printf("Printing to stdout...\n"); }
+	//if (DEBUG){ printf("Printing to stdout...\n"); }
 	// Print to stdout
-	if (fputs(input, stdout) == EOF) { printf("Error writing to stdout\n"); }
+	//if (fputs(input, stdout) == EOF) { printf("Error writing to stdout\n"); }
 
 	// Print to each file specified
 	for (int i = 0; i < numFiles; i++){
