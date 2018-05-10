@@ -21,10 +21,11 @@ int maskBits(int options, Options mask);
 BOOL getOption(char arg[], int *options);
 BOOL addStringToArray(char **array, int *pos, char src[]);
 
-BOOL readInput(char **buffer);
+int readInput(char **buffer);
 
 void printFileNames(char **files, size_t numFiles);
 void printOptions(int options);
+void printInput(char *input, size_t inputLength, char **files, size_t numFiles, BOOL append);
 
 void free2D(char **array, size_t numRows);
 #endif

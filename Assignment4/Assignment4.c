@@ -13,12 +13,14 @@ BOOL DEBUG = FALSE;
 
 int main(int argc, char *argv[]){
 	int options = fERROR;
+	BOOL append = FALSE;
 
 	size_t numFiles = argc - 1;
 	char** files;
 	int currentFile = 0;
 
 	char *input;
+	size_t inputLength;
 
 	// Preliminary loop through args to get options and determine debug mode
 	for (int i = 1; i < argc; i++){
@@ -27,8 +29,9 @@ int main(int argc, char *argv[]){
 	}
 	// Set debug mode
 	DEBUG = maskBits(options, fDEBUG) ? TRUE : FALSE;
+	append = maskBits(options, fAPPEND) ? TRUE : FALSE;
 	
-	// Print debug info
+	// Print debug information
 	if (DEBUG) { 
 		printf("Number of args: %d\n", argc - 1);
 		printf("Number of files: %ld\n", numFiles);
@@ -48,16 +51,16 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	// Read the standard input into the buffer
-	if (readInput(&input) == FALSE) { return EXIT_FAILURE; }
-
-	// Print the input to stdout
-	printf("%s\n", input);
-	
 	// Print debug information
 	if (DEBUG) { printFileNames(files, numFiles); }
 
-	free(input);
+	// Read the standard input into the buffer
+	if ((inputLength = readInput(&input)) == -1) { return EXIT_FAILURE; }
+
+	// Print stdin
+	printInput(input, inputLength, files, numFiles, append);
+
+	if (input != NULL) { free(input); }
 	free2D(files, numFiles);
 	return EXIT_SUCCESS;
 }
@@ -87,13 +90,13 @@ BOOL addStringToArray(char **array, int *pos, char src[]){
 }
 
 // Read stdin into the buffer provided
-BOOL readInput(char **buffer){
+int readInput(char **buffer){
 	size_t buffSize = BUFSIZ;
 	size_t length = 0;
 	char character;
 
 	// Allocate memory for the buffer
-	if ((*buffer = calloc(buffSize, sizeof(char))) == NULL) { perror("malloc"); return FALSE; }
+	if ((*buffer = calloc(buffSize, sizeof(char))) == NULL) { perror("malloc"); return -1; }
 
 	while(TRUE){
 		// Print debug information
@@ -119,7 +122,7 @@ BOOL readInput(char **buffer){
 			// Double the size of the buffer
 			buffSize *= 2;
 			// Reallocate the new amount of memory
-			if ((*buffer = realloc(*buffer, buffSize * sizeof(char))) == NULL) { perror("realloc"); return FALSE; }
+			if ((*buffer = realloc(*buffer, buffSize * sizeof(char))) == NULL) { perror("realloc"); return -1; }
 
 			// Print debug information
 			if (DEBUG) {
@@ -129,13 +132,16 @@ BOOL readInput(char **buffer){
 	}
 
 	// If there was an error, return false
-	if (ferror(stdin)) { perror("fread"); return FALSE; }
+	if (ferror(stdin)) { perror("fread"); return -1; }
 	// Print debug information
-	if (DEBUG) { printf("Done.\n\n"); }
+	if (DEBUG) {
+		printf("Done.\n");
+		printf("Read %ld bytes\n\n", length);
+	}
 
 	// Reallocate the buffer to the exact size of the buffer
-	realloc(*buffer, sizeof(char) * length);
-	return TRUE;
+	if (length != 0) { realloc(*buffer, sizeof(char) * length); }
+	return length;
 }
 
 // Printing
@@ -153,6 +159,31 @@ void printOptions(int options){
 	printf("Options: Debug");
 	if (maskBits(options, fAPPEND)) { printf(", Append\n\n"); }
 	else { printf("\n\n"); }
+}
+void printInput(char *input, size_t inputLength, char **files, size_t numFiles, BOOL append){
+	FILE *fPtr = NULL;
+	// Append or overwrite file
+	const char *fileMode = append ? "a":"w";
+
+	// Print debug information
+	if (DEBUG){ printf("Printing to stdout...\n"); }
+	// Print to stdout
+	if (fputs(input, stdout) == EOF) { printf("Error writing to stdout\n"); }
+
+	// Print to each file specified
+	for (int i = 0; i < numFiles; i++){
+		// Sets the file pointer to the current file, skip if the pointer is NULL
+		if ((fPtr = fopen(files[i], fileMode)) == NULL) { printf("Error opening file %s\n", files[i]); continue; }
+
+		// Print debug information
+		if (DEBUG){ printf("\nPrinting to file %s...\n",files[i]); }
+		
+		// Print to file
+		if (fputs(input, fPtr) == EOF) { printf("Error writing to file %s\n", files[i]); }
+
+		// Close the file
+		fclose(fPtr);
+	}	
 }
 
 // Freeing memory
