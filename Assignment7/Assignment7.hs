@@ -18,7 +18,7 @@ replace m n ls = map fn ls where
 
 -- 3
 sumsq :: Int -> Int
-sumsq n = ((foldr (+) 0) . (map (^2))) [1..n]
+sumsq n = foldr (+) 0 ([x^2 | x <- [1..n]])
 
 -- 4
 --notWhiteSpace :: Char -> Bool
