@@ -34,13 +34,13 @@ Functions:
 			Takes a binary tree and outputs its nodes as a list, traversed inorder
 		Ex:
 			assuming tree is a binary tree which looks like:
-					3
-				  /   \
-				 1     7
-			    / \   / \
-			   E   E E   9
-			   		    / \
-			   		   E   E
+                    3
+                  /   \
+                 1     7
+                / \   / \
+               E   E E   9
+                        / \
+                       E   E
 			toList tree
 			>> [1, 3, 7, 9]
 		
@@ -52,13 +52,13 @@ Functions:
 		Ex:
 			insert 5 "tree from first part"
 			>> a tree which looks like:
-					3
-				  /   \
-				 1     7
-			    / \   / \
-			   E   E 5   9
-			   		    / \
-			   		   E   E
+                    3
+                  /   \
+                 1     7
+                / \   / \
+               E   E 5   9
+                        / \
+                       E   E
 		
 	fromList:
 		Inputs:		list of node values
@@ -76,31 +76,31 @@ Functions:
 			Takes the given BTree and sorts it into a new BTree
 		Ex:
 			assuming tree is a tree which looks like:
-				   8
-				  / \
-				 2   E
-			    / \
-			   E   7
-			   	  / \
-			   	 4   E
-			   	/ \
-			   3   E
-			  / \
-			 E   E
+                   8
+                  / \
+                 2   E
+                / \
+               E   7
+                  / \
+                 4   E
+                / \
+               3   E
+              / \
+             E   E
 
 			sort tree
 			>> a tree which looks like
-					8
-			   	   / \
-			   	  7   E
-			   	 / \
-			    4   E
-			   / \
-			  3   E
-			 / \
-			2   E
-		   / \
-		  E   E
+                    8
+                   / \
+                  7   E
+                 / \
+                4   E
+               / \
+              3   E
+             / \
+            2   E
+           / \
+          E   E
 
 	lookupOrd:
 		Inputs:		A value a and a list of tuples [(a, b)]
