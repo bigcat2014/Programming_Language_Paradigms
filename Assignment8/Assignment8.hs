@@ -1,5 +1,5 @@
 -- 1a
-data BTree a = Empty | Node a (BTree a) (BTree a)
+data BTree a = Empty | Node a (BTree a) (BTree a) deriving (Show)
 
 -- 1b
 toList :: BTree a -> [a]
@@ -17,6 +17,7 @@ insert x (Node y t1 t2)
 -- 1d
 fromList :: Ord a => [a] -> BTree a
 fromList xs = foldr insert Empty xs
+-- fromList xs = foldr insert Empty (reverse xs)
 
 -- 1e
 sort :: Ord a => BTree a -> BTree a
